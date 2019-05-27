@@ -46,10 +46,10 @@ public:
             else
                 q->left = tmp;
         }
-        fix(tmp);
+        add_fix(tmp);
     }
 
-    void fix(node *tmp) {
+    void add_fix(node *tmp) {
         node *u;
         if (root == tmp) {
             tmp->color = 'b';
@@ -153,6 +153,204 @@ public:
         }
     }
 
+    void del() {
+        if(root==NULL) {
+            cout << "\n Дерево отсутствует";
+            return;
+        }
+        int x;
+        cout << "\n Введите элемент для удаления: "; cin >> x;
+        node *p;
+        p = root;
+        node *y = NULL;
+        node *q = NULL;
+        int found=0;
+        while (p != NULL && found == 0) {
+            if (p->key == x)
+                found=1;
+            if(found == 0) {
+                if (p->key < x)
+                    p = p->right;
+                else
+                    p=p->left;
+            }
+        }
+        if(found==0) {
+            cout<< "\n Элемент не найден ";
+            return;
+        }
+        else {
+            cout << "\n Удаленный элемент: " << p->key;
+            cout<< "\n Цвет: ";
+            if(p->color == 'b')
+                cout << "Чёрный";
+            else
+                cout << "Красный";
+            if(p->parent != NULL)
+                cout << "\n Родитель: "<< p->parent->key;
+            else
+                cout << "\n Родитель остутствует";
+            if(p->right!= NULL)
+                cout << "\n Правый потомок: " << p->right->key;
+            else
+                cout << "\n Правый потомок отсутствует";
+            if(p->left!=NULL)
+                cout << "\n Левый потомок: " << p->left->key;
+            else
+                cout << "\n Левый потомок отсутствует";
+            cout << "\n Узел удален";
+            if(p->left == NULL || p->right == NULL)
+                y = p;
+            else
+                y = successor(p);
+            if(y->left != NULL)
+                q = y->left;
+            else {
+                if(y->right != NULL)
+                    q = y->right;
+                else
+                    q = NULL;
+            }
+            if(q != NULL)
+                q->parent = y->parent;
+            if(y->parent == NULL)
+                root = q;
+            else {
+                if(y == y->parent->left)
+                    y->parent->left = q;
+                else
+                    y->parent->right = q;
+            }
+            if(y!=p) {
+                p->color = y->color;
+                p->key = y->key;
+            }
+            if(y->color == 'b')
+                del_fix(q);
+        }
+    }
+
+    void del_fix(node *tmp) {
+        node *s;
+        while (tmp != root && tmp->color == 'b') {
+            if (tmp->parent->left == tmp) {
+                s = tmp->parent->right;
+                if (s->color == 'r') {
+                    s->color = 'b';
+                    tmp->parent->color = 'r';
+                    left(tmp->parent);
+                    s = tmp->parent->right;
+                }
+                if (s->right->color == 'b' && s->left->color == 'b') {
+                    s->color = 'r';
+                    tmp = tmp->parent;
+                }
+                else {
+                    if (s->right->color == 'b') {
+                        s->left->color == 'b';
+                        s->color = 'r';
+                        right(s);
+                        s = tmp->parent->right;
+                    }
+                    s->color = tmp->parent->color;
+                    tmp->parent->color = 'b';
+                    s->right->color = 'b';
+                    left(tmp->parent);
+                    tmp = root;
+                }
+            }
+            else {
+                s = tmp->parent->left;
+                if (s->color == 'r') {
+                    s->color = 'b';
+                    tmp->parent->color = 'r';
+                    right(tmp->parent);
+                    s = tmp->parent->left;
+                }
+                if (s->left->color == 'b' && s->right->color == 'b') {
+                    s->color = 'r';
+                    tmp = tmp->parent;
+                }
+                else {
+                    if(s->left->color == 'b') {
+                        s->right->color = 'b';
+                        s->color = 'r';
+                        left(s);
+                        s = tmp->parent->left;
+                    }
+                    s->color = tmp->parent->color;
+                    tmp->parent->color = 'b';
+                    s->left->color = 'b';
+                    right(tmp->parent);
+                    tmp = root;
+                }
+            }
+            tmp->color = 'b';
+            root->color = 'b';
+        }
+    }
+
+    node* successor(node *tmp) {
+        node *y = NULL;
+        if (tmp->left != NULL) {
+            y = tmp->left;
+            while (y->right != NULL)
+                y = y->right;
+        }
+        else {
+            y = tmp->right;
+            while (y->left != NULL)
+                y = y->left;
+        }
+        return y;
+    }
+
+    void search() {
+        if(root==NULL) {
+            cout << "\n Дерево отсутствует";
+            return;
+        }
+        int x;
+        cout << "\n Введите значение для поиска: "; cin >> x;
+        node *p = root;
+        int found = 0;
+        while (p != NULL && found==0) {
+            if (p->key == x)
+                found=1;
+            if (found==0) {
+                if(p->key < x)
+                    p = p->right;
+                else
+                    p = p->left;
+            }
+        }
+        if(found == 0)
+            cout << "\n Элемент не найден";
+        else {
+            cout << "\n\t Найденный узел: ";
+            cout << "\n Значение: "<< p->key;
+            cout << "\n Цвет: ";
+            if (p->color == 'b')
+                cout << "Чёрный";
+            else
+                cout << "Красный";
+            if(p->parent != NULL)
+                cout << "\n Родитель: "<< p->parent->key;
+            else
+                cout << "\n Родитель остутствует";
+            if(p->right != NULL)
+                cout << "\n Правый потомок: " << p->right->key;
+            else
+                cout << "\n Правый потомок отсутствует";
+            if(p->left != NULL)
+                cout << "\n Левый потомок: " << p->left->key;
+            else
+                cout << "\n Левый потомок отсутствует";
+            cout << endl;
+        }
+    }
+
+
     void disp() {
         display(root);
     }
@@ -173,15 +371,15 @@ public:
             if (tmp->parent != NULL)
                 cout << "\n Родитель: " << tmp->parent->key;
             else
-                cout << "\n Родитель остутствует ";
+                cout << "\n Родитель остутствует";
             if (tmp->right != NULL)
                 cout << "\n Правый потомок: " << tmp->right->key;
             else
-                cout << "\n Правый потомок отсутствует ";
+                cout << "\n Правый потомок отсутствует";
             if (tmp->left != NULL)
                 cout << "\n Левый потомок: " << tmp->left->key;
             else
-                cout << "\n Левый потомок отсутствует  ";
+                cout << "\n Левый потомок отсутствует";
             cout << endl;
             if (tmp->left) {
                 cout << "\n\n Левый:\n";
@@ -203,18 +401,22 @@ int main() {
         cout << "\t КРАСНО-ЧЁРНОЕ ДЕРЕВО " ;
         cout << "\n 1. Вставка элемента ";
         cout << "\n 2. Отобразить дерево";
-        cout << "\n 3. Выход " ;
+        cout << "\n 3. Удаление элемента " ;
+        cout << "\n 4. Поиск элемента " ;
+        cout << "\n 5. Выход " ;
         cout << "\n Выберете действие: ";
         cin >> count1;
         switch(count1) {
-            case 1 : tree.add();
+            case 1: tree.add();
                 cout << "\n Элемент добавлен \n";
                 break;
-            case 2 : tree.disp();
+            case 2: tree.disp();
                 break;
-            case 3 : count2 = 1;
+            case 3: tree.del();
+            case 4: tree.search();
+            case 5: count2 = 1;
                 break;
-            default : cout << "\n Выберете действие из списка";
+            default: cout << "\n Выберете действие из списка";
         }
         cout << endl;
         }while (count2 != 1);
