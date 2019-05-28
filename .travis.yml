@@ -1,1 +1,11 @@
-language: с++
+language: сpp
+os:
+    - linux
+    - osx
+    
+compiler:
+    - gcc
+    - clang
+    
+script:
+
