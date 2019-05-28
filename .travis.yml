@@ -7,5 +7,5 @@ compiler:
     - gcc
     - clang
     
-script:
+script: make main
 
