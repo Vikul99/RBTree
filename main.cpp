@@ -260,7 +260,7 @@ void RBTree:: del_fix(node *tmp) {
             }
             else {
                 if (s->right->color == 'b') {
-                    s->left->color == 'b';
+                    s->left->color = 'b';
                     s->color = 'r';
                     right(s);
                     s = tmp->parent->right;
