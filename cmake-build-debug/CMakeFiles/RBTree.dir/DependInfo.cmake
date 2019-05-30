@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/IlyaVikulov/Desktop/C++/RBTree/main.cpp" "/Users/IlyaVikulov/Desktop/C++/RBTree/cmake-build-debug/CMakeFiles/RBTree.dir/main.cpp.o"
+  "/Users/IlyaVikulov/Desktop/RBTree/main.cpp" "/Users/IlyaVikulov/Desktop/RBTree/cmake-build-debug/CMakeFiles/RBTree.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

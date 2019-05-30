@@ -1,4 +1,4 @@
-# Install script for directory: /Users/IlyaVikulov/Desktop/C++/RBTree
+# Install script for directory: /Users/IlyaVikulov/Desktop/RBTree
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/IlyaVikulov/Desktop/C++/RBTree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/IlyaVikulov/Desktop/RBTree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
